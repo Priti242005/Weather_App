@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f0f0f0;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            margin: auto;
+        }
+        input, button {
+            padding: 10px;
+            margin: 10px 0;
+            width: 80%;
+        }
+        .weather-info {
+            margin-top: 20px;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Weather App</h2>
+        <input type="text" id="location" placeholder="Enter city name" />
+        <button onclick="getWeather()">Get Weather</button>
+        <div class="weather-info" id="weather-info"></div>
+    </div>
+
+    <script>
+        function getWeather() {
+            let city = document.getElementById("location").value;
+            if (!city) {
+                alert("Please enter a city name");
+                return;
+            }
+            
+            fetch(`http://api.weatherapi.com/v1/current.json?key=af4f1fbaadd847e68c5182741250504&q=${city}&aqi=yes`)
+                .then(response => response.json())
+                .then(data => {
+                    let weatherInfo = `
+                        <p><strong>${data.location.name}, ${data.location.country}</strong></p>
+                        <p>Temperature: ${data.current.temp_c}°C</p>
+                        <p>Condition: ${data.current.condition.text}</p>
+                    `;
+                    document.getElementById("weather-info").innerHTML = weatherInfo;
+                })
+                .catch(error => {
+                    console.error("Error fetching data:", error);
+                    document.getElementById("weather-info").innerHTML = "Error fetching weather data";
+                });
+        }
+    </script>
+</body>
+</html>
