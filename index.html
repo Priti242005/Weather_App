@@ -48,7 +48,7 @@
                 return;
             }
             
-            fetch(`http://api.weatherapi.com/v1/current.json?key=af4f1fbaadd847e68c5182741250504&q=${city}&aqi=yes`)
+            fetch(`https://api.weatherapi.com/v1/current.json?key=af4f1fbaadd847e68c5182741250504&q=${city}&aqi=yes`)
                 .then(response => response.json())
                 .then(data => {
                     let weatherInfo = `
